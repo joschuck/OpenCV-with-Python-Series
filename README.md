@@ -17,8 +17,8 @@ Next, install the required Python modules:
 
 Once you have installed the modules run any example like this:
 
-    $ 01_thresholding
-    $ python adaptive_thresholding.py
+    $ cd src
+    $ python 01_thresholding/adaptive_thresholding.py
 
 ### 01 Thresholding
 
