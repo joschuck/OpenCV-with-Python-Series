@@ -1,7 +1,6 @@
 """
 Otsu's thresholding widget
 """
-# pylint: disable=R0801
 
 import cv2
 import numpy as np
