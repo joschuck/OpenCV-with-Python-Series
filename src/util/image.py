@@ -1,24 +1,19 @@
-# -*- coding: utf-8 -*-
 """
-Common task with image data.
-==================================
-
-20.07.20.
-Conversion to QImage and QPixmap
+Qt/OpenCV adapter functions
 """
 
-__author__ = 'Johannes Schuck'
-__email__ = 'johannes.schuck@gmail.com'
+__author__ = "Johannes Schuck"
+__email__ = "johannes.schuck@gmail.com"
 
-__all__ = ['to_q_image',
-           'to_q_pixmap']
+__all__ = ["to_q_image", "to_q_pixmap"]
 
+from typing import Optional
 
-from PySide2.QtGui import QImage, QPixmap
+from PySide6.QtGui import QImage, QPixmap
 import numpy as np
 
 
-def to_q_image(image: np.ndarray):
+def to_q_image(image: np.ndarray) -> Optional[QImage]:
     """
     Converts a OpenCV / NumPy array to a QImage.
     Expects the image to be 8 bit.
@@ -37,20 +32,24 @@ def to_q_image(image: np.ndarray):
     if image is None:
         return QImage()
 
-    if image.dtype == np.uint8:
-        if len(image.shape) == 2:
-            height, width = image.shape
-            return QImage(image.data, width, height, width, QImage.Format_Indexed8)
+    if image.dtype != np.uint8:
+        return None
 
-        elif len(image.shape) == 3:
-            height, width, ch = image.shape
-            if image.shape[2] == 3:
-                return QImage(image.data, width, height, width * 3, QImage.Format_BGR888)
-            elif image.shape[2] == 4:
-                return QImage(image.data, width, height, width * 3, QImage.Format_ARGB32)
+    if len(image.shape) == 2:
+        height, width = image.shape
+        return QImage(image.data, width, height, width, QImage.Format_Indexed8)
+
+    if len(image.shape) == 3:
+        height, width, channels = image.shape
+        if channels == 3:
+            return QImage(image.data, width, height, width * 3, QImage.Format_BGR888)
+
+        if channels == 4:
+            return QImage(image.data, width, height, width * 3, QImage.Format_ARGB32)
+    return None
 
 
-def to_q_pixmap(image: QPixmap):
+def to_q_pixmap(image: QPixmap) -> QPixmap:
     """
     Converts a OpenCV / NumPy array to a QPixmap.
     Expects the image to be 8 bit.

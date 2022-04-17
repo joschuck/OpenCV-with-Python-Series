@@ -1,10 +1,12 @@
-# -*- coding: utf-8 -*-
+"""Webcam utility class."""
 import cv2
 import numpy as np
-from PySide2.QtCore import QThread, Signal
+from PySide6.QtCore import QThread, Signal
 
 
 class Webcam(QThread):
+    """OpenCV Webcam in QThread"""
+
     is_paused: bool = False
     acquired_image_signal: Signal = Signal(np.ndarray)
 
@@ -22,12 +24,13 @@ class Webcam(QThread):
         self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
 
     def run(self):
+        """Main loop."""
         while not self.isInterruptionRequested():
             # Capture frame-by-frame
             ret, frame = self.cap.read()
 
             if self.is_paused:
-               continue
+                continue
 
             if ret:
                 frame = cv2.resize(frame, (self.width, self.height))
@@ -36,13 +39,16 @@ class Webcam(QThread):
         self.cap.release()
 
     def stop(self):
+        """Stops the webcam."""
         self.requestInterruption()
         self.wait(100)
-        self.quit()
-        #self.terminate()
+        # self.quit()
+        # self.terminate()
 
-    def set_pause(self, pause):
+    def pause(self, pause):
+        """Pauses the webcam."""
         self.is_paused = pause
 
-    def toggle_pause(self):
+    def toggle(self):
+        """Toggles play/pause."""
         self.is_paused = not self.is_paused
