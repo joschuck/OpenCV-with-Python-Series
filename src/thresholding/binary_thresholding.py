@@ -76,7 +76,7 @@ class BinaryThresholding(QWidget):
     def open_image(self):
         """Shows a file dialog and displays the selected image."""
         image = open_image_dialog()
-        if image:
+        if image is not None:
             self.image = image
             self.update_image()
 
