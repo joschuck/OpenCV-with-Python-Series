@@ -83,7 +83,8 @@ class AdaptiveThresholding(QWidget):
         """Updates the widget's image."""
         method_idx = self.method_combobox.currentIndex()
 
-        self.block_size_label.setText(f"Block size: {self.block_size}")
+        block_size = self.block_size_slider.value()
+        c_constant = self.c_constant_slider.value()
 
         if method_idx == 1:
             image = cv2.adaptiveThreshold(
@@ -91,8 +92,8 @@ class AdaptiveThresholding(QWidget):
                 255,
                 cv2.ADAPTIVE_THRESH_MEAN_C,
                 cv2.THRESH_BINARY,
-                self.block_size,
-                self.c_constant,
+                block_size,
+                c_constant,
             )
         elif method_idx == 2:
             image = cv2.adaptiveThreshold(
@@ -100,8 +101,8 @@ class AdaptiveThresholding(QWidget):
                 255,
                 cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
                 cv2.THRESH_BINARY,
-                self.block_size,
-                self.c_constant,
+                block_size,
+                c_constant,
             )
         else:
             image = self.image
