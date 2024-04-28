@@ -17,7 +17,7 @@ Next, install the required Python modules:
 
 Once you have installed the modules run any example like this:
 
-    $ python -m src/run
+    $ python -m src.run
 
 ### 01 Thresholding
 
