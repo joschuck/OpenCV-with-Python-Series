@@ -75,7 +75,7 @@ class FourierTransform(QWidget):
             self.start_webcam_button.clicked.connect(self.start_webcam)
 
         image = open_image_dialog()
-        if image:
+        if image is not None:
             self.set_image(image)
 
     def set_image(self, image):

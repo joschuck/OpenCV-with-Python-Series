@@ -1,0 +1,8 @@
+name: OpenCV-with-Python-Series
+channels:
+  - conda-forge
+dependencies:
+  - python=3.8.18
+
+  - pip:
+    - -r requirements.txt
